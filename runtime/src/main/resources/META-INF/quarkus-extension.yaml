@@ -1,0 +1,11 @@
+---
+name: "Logging Kafka"
+metadata:
+  keywords:
+  - "logging"
+  - "kafka"
+  - "handler"
+  guide: "https://quarkus.io/guides/centralized-log-management"
+  categories:
+  - "core"
+  status: "preview"
