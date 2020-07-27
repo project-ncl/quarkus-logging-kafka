@@ -44,15 +44,13 @@ import org.jboss.logmanager.ExtLogRecord;
  */
 public class Log4jAppenderHandler extends ExtHandler {
 
-    public static final String ACTIVATE_OPTIONS_METHOD_NAME = "activate";
-    public static final String ACTIVATOR_PROPERTY_METHOD_NAME = "dummy";
     private volatile Appender appender = null;
     private final boolean applyLayout;
 
     private static final Logger loggingLogger = Logger.getLogger("io.quarkus.logging.kafka");
 
-    private static final AtomicReferenceFieldUpdater<Log4jAppenderHandler, Appender> appenderUpdater = AtomicReferenceFieldUpdater
-            .newUpdater(Log4jAppenderHandler.class, Appender.class, "appender");
+    private static final AtomicReferenceFieldUpdater<Log4jAppenderHandler, Appender> appenderUpdater =
+            AtomicReferenceFieldUpdater.newUpdater(Log4jAppenderHandler.class, Appender.class, "appender");
 
     public Log4jAppenderHandler() {
         applyLayout = true;
