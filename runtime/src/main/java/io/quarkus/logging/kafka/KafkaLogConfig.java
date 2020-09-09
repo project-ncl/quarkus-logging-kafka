@@ -1,5 +1,6 @@
 package io.quarkus.logging.kafka;
 
+import java.util.Optional;
 import java.util.logging.Level;
 
 import org.apache.kafka.log4jappender.KafkaLog4jAppender;
@@ -24,92 +25,108 @@ public class KafkaLogConfig {
      */
     @ConfigItem
     public String brokerList;
+
     /**
      * KafkaLog4jAppender's {@link KafkaLog4jAppender#getTopic() topic}.
      */
     @ConfigItem
     public String topic;
+
     /**
      * KafkaLog4jAppender's {@link KafkaLog4jAppender#getCompressionType() compressionType}.
      */
     @ConfigItem
-    public String compressionType;
+    public Optional<String> compressionType;
+
     /**
      * KafkaLog4jAppender's {@link KafkaLog4jAppender#getSecurityProtocol() securityProtocol}.
      */
     @ConfigItem
-    public String securityProtocol;
+    public Optional<String> securityProtocol;
+
     /**
      * KafkaLog4jAppender's {@link KafkaLog4jAppender#getSslTruststoreLocation() sslTruststoreLocation}.
      */
     @ConfigItem
-    public String sslTruststoreLocation;
+    public Optional<String> sslTruststoreLocation;
+
     /**
      * KafkaLog4jAppender's {@link KafkaLog4jAppender#getSslTruststorePassword() sslTruststorePassword}.
      */
     @ConfigItem
-    public String sslTruststorePassword;
+    public Optional<String> sslTruststorePassword;
+
     /**
      * KafkaLog4jAppender's {@link KafkaLog4jAppender#getSslKeystoreType() sslKeystoreType}
      */
     @ConfigItem
-    public String sslKeystoreType;
+    public Optional<String> sslKeystoreType;
+
     /**
      * KafkaLog4jAppender's {@link KafkaLog4jAppender#getSslKeystoreLocation() sslKeystoreLocation}.
      */
     @ConfigItem
-    public String sslKeystoreLocation;
+    public Optional<String> sslKeystoreLocation;
+
     /**
      * KafkaLog4jAppender's {@link KafkaLog4jAppender#getSslKeystorePassword() sslKeystorePassword}.
      */
     @ConfigItem
-    public String sslKeystorePassword;
+    public Optional<String> sslKeystorePassword;
+
     /**
      * KafkaLog4jAppender's {@link KafkaLog4jAppender#getSaslKerberosServiceName() saslKerberosServiceName}.
      */
     @ConfigItem
-    public String saslKerberosServiceName;
+    public Optional<String> saslKerberosServiceName;
+
     /**
      * KafkaLog4jAppender's {@link KafkaLog4jAppender#getClientJaasConfPath() clientJaasConfPath}.
      */
     @ConfigItem
-    public String clientJaasConfPath;
+    public Optional<String> clientJaasConfPath;
+
     /**
      * KafkaLog4jAppender's {@link KafkaLog4jAppender#getKerb5ConfPath() kerb5ConfPath}.
      */
     @ConfigItem
-    public String kerb5ConfPath;
+    public Optional<String> kerb5ConfPath;
+
     /**
      * KafkaLog4jAppender's {@link KafkaLog4jAppender#getMaxBlockMs() maxBlockMs}.
      */
     @ConfigItem
-    public Integer maxBlockMs;
+    public Optional<Integer> maxBlockMs;
 
     /**
      * KafkaLog4jAppender's {@link KafkaLog4jAppender#getRetries() retries}.
      */
     @ConfigItem
-    public Integer retries;
+    public Optional<Integer> retries;
+
     /**
      * KafkaLog4jAppender's {@link KafkaLog4jAppender#getRequiredNumAcks() requiredNumAcks}.
      */
     @ConfigItem
-    public Integer requiredNumAcks;
+    public Optional<Integer> requiredNumAcks;
+
     /**
      * KafkaLog4jAppender's {@link KafkaLog4jAppender#getDeliveryTimeoutMs() deliveryTimeoutMs}.
      */
     @ConfigItem
-    public Integer deliveryTimeoutMs;
+    public Optional<Integer> deliveryTimeoutMs;
+
     /**
      * KafkaLog4jAppender's {@link KafkaLog4jAppender#getIgnoreExceptions() ignoreExceptions}.
      */
     @ConfigItem
-    public Boolean ignoreExceptions;
+    public Optional<Boolean> ignoreExceptions;
+
     /**
      * KafkaLog4jAppender's {@link KafkaLog4jAppender#getSyncSend() syncSend}.
      */
     @ConfigItem
-    public Boolean syncSend;
+    public Optional<Boolean> syncSend;
 
     /**
      * Date format pattern used in {@link JsonFormatter} used in the logging Handler.
@@ -126,19 +143,20 @@ public class KafkaLogConfig {
     public Level level;
 
     /**
-     * Determine whether the log handler should be wrapped in an instance of {@link AsyncHandler}.
+     * Determine whether the log handler should be wrapped in an instance of {@link AsyncHandler}. {@code true} by
+     * default.
      */
-    @ConfigItem
+    @ConfigItem(defaultValue = "true")
     public boolean async;
     /**
      * AsyncHandler's {@link AsyncHandler#getQueueLength() queueLength}
      */
     @ConfigItem
-    public Integer asyncQueueLength;
+    public Optional<Integer> asyncQueueLength;
     /**
      * AsyncHandler's {@link AsyncHandler#getOverflowAction() overflowAction}
      */
     @ConfigItem
-    public OverflowAction asyncOverflowAction;
+    public Optional<OverflowAction> asyncOverflowAction;
 
 }

@@ -1,25 +1,3 @@
-/*
- * JBoss, Home of Professional Open Source.
- * Copyright 2013, Red Hat, Inc., and individual contributors
- * as indicated by the @author tags. See the copyright.txt file in the
- * distribution for a full listing of individual contributors.
- *
- * This is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation; either version 2.1 of
- * the License, or (at your option) any later version.
- *
- * This software is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software; if not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
- * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- */
-
 package io.quarkus.logging.kafka;
 
 import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
@@ -36,11 +14,14 @@ import org.jboss.logmanager.ExtHandler;
 import org.jboss.logmanager.ExtLogRecord;
 
 /**
- * Wraps a {@link Appender log4j appender} to an {@link ExtHandler handler}.
+ * A {@link ExtHandler JUL handler} wrapper for a {@link Appender log4j appender}.
  *
+ * <p>
  * Based on Log4jAppenderHandler class from wildfly-core project.
+ * </p>
  *
  * @author <a href="mailto:jperkins@redhat.com">James R. Perkins</a>
+ * @author <a href="mailto:pkocandr@redhat.com">Petr Kocandrle</a>
  */
 public class Log4jAppenderHandler extends ExtHandler {
 
@@ -49,8 +30,8 @@ public class Log4jAppenderHandler extends ExtHandler {
 
     private static final Logger loggingLogger = Logger.getLogger("io.quarkus.logging.kafka");
 
-    private static final AtomicReferenceFieldUpdater<Log4jAppenderHandler, Appender> appenderUpdater =
-            AtomicReferenceFieldUpdater.newUpdater(Log4jAppenderHandler.class, Appender.class, "appender");
+    private static final AtomicReferenceFieldUpdater<Log4jAppenderHandler, Appender> appenderUpdater = AtomicReferenceFieldUpdater
+            .newUpdater(Log4jAppenderHandler.class, Appender.class, "appender");
 
     public Log4jAppenderHandler() {
         applyLayout = true;
