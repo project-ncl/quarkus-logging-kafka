@@ -22,10 +22,8 @@ public class KafkaLogHandlerRecorder {
      */
     public RuntimeValue<Optional<Handler>> initializeHandler(final KafkaLogConfig config) {
         if (!config.enabled) {
-            System.out.print("Kafka logger config is DISABLED!");
             return new RuntimeValue<>(Optional.empty());
         }
-        System.out.print("Kafka logger config is ENABLED!");
 
         KafkaLog4jAppender appender = createAppender(config);
 
