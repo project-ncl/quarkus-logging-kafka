@@ -2,6 +2,7 @@ package io.quarkus.logging.kafka;
 
 import java.util.Optional;
 import java.util.logging.Handler;
+import java.util.logging.Logger;
 
 import org.apache.kafka.log4jappender.KafkaLog4jAppender;
 import org.jboss.logmanager.ExtHandler;
@@ -13,6 +14,8 @@ import io.quarkus.runtime.annotations.Recorder;
 
 @Recorder
 public class KafkaLogHandlerRecorder {
+
+    private static final Logger loggingLogger = Logger.getLogger("io.quarkus.logging.kafka");
 
     /**
      * Kafka logging handler initialization based on the config.
@@ -58,6 +61,8 @@ public class KafkaLogHandlerRecorder {
     }
 
     private KafkaLog4jAppender createAppender(final KafkaLogConfig config) {
+        loggingLogger.info("Processing config to create appender: " + config);
+
         KafkaLog4jAppender appender = new KafkaLog4jAppender();
         appender.setBrokerList(config.brokerList);
         appender.setTopic(config.topic);
@@ -79,6 +84,26 @@ public class KafkaLogHandlerRecorder {
         config.deliveryTimeoutMs.ifPresent(timeout -> appender.setDeliveryTimeoutMs(timeout));
         config.ignoreExceptions.ifPresent(ignoreExceptions -> appender.setIgnoreExceptions(ignoreExceptions));
         config.syncSend.ifPresent(syncSend -> appender.setSyncSend(syncSend));
+
+        loggingLogger.info("Created " + appender + " with values:\n"
+                + "  BrokerList: " + appender.getBrokerList() + "\n"
+                + "topic: " + appender.getTopic() + "\n"
+                + "compressionType: " + appender.getCompressionType() + "\n"
+                + "sSecurityProtocol: " + appender.getSecurityProtocol() + "\n"
+                + "sslTruststoreLocation: " + appender.getSslTruststoreLocation() + "\n"
+                + "sslTruststorePassword: " + appender.getSslTruststorePassword() + "\n"
+                + "sslKeystoreType: " + appender.getSslKeystoreType() + "\n"
+                + "sslKeystoreLocation: " + appender.getSslKeystoreLocation() + "\n"
+                + "sslKeystorePassword: " + appender.getSslKeystorePassword() + "\n"
+                + "saslKerberosServiceName: " + appender.getSaslKerberosServiceName() + "\n"
+                + "clientJaasConfPath: " + appender.getClientJaasConfPath() + "\n"
+                + "kerb5ConfPath: " + appender.getKerb5ConfPath() + "\n"
+                + "maxBlockMs: " + appender.getMaxBlockMs() + "\n"
+                + "retries: " + appender.getRetries() + "\n"
+                + "requiredNumAcks: " + appender.getRequiredNumAcks() + "\n"
+                + "deliveryTimeoutMs: " + appender.getDeliveryTimeoutMs() + "\n"
+                + "ignoreExceptions: " + appender.getIgnoreExceptions() + "\n"
+                + "syncSend: " + appender.getSyncSend());
 
         return appender;
     }

@@ -159,4 +159,19 @@ public class KafkaLogConfig {
     @ConfigItem
     public Optional<OverflowAction> asyncOverflowAction;
 
+    @Override
+    public String toString() {
+        return "KafkaLogConfig [enabled=" + enabled + ", brokerList=" + brokerList + ", topic=" + topic
+                + ", compressionType=" + compressionType + ", securityProtocol=" + securityProtocol
+                + ", sslTruststoreLocation=" + sslTruststoreLocation + ", sslTruststorePassword="
+                + sslTruststorePassword + ", sslKeystoreType=" + sslKeystoreType + ", sslKeystoreLocation="
+                + sslKeystoreLocation + ", sslKeystorePassword=" + sslKeystorePassword + ", saslKerberosServiceName="
+                + saslKerberosServiceName + ", clientJaasConfPath=" + clientJaasConfPath + ", kerb5ConfPath="
+                + kerb5ConfPath + ", maxBlockMs=" + maxBlockMs + ", retries=" + retries + ", requiredNumAcks="
+                + requiredNumAcks + ", deliveryTimeoutMs=" + deliveryTimeoutMs + ", ignoreExceptions="
+                + ignoreExceptions + ", syncSend=" + syncSend + ", timestampPattern=" + timestampPattern + ", level="
+                + level + ", async=" + async + ", asyncQueueLength=" + asyncQueueLength + ", asyncOverflowAction="
+                + asyncOverflowAction + "]";
+    }
+
 }

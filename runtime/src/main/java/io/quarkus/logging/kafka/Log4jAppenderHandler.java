@@ -102,7 +102,6 @@ public class Log4jAppenderHandler extends ExtHandler {
         if (this.appender != null) {
             close();
         }
-        //checkAccess(this); not available in jboss-logmanager-embedded 1.0.4
         if (applyLayout && appender != null) {
             final Formatter formatter = getFormatter();
             appender.setLayout(formatter == null ? null : new FormatterLayout(formatter));
