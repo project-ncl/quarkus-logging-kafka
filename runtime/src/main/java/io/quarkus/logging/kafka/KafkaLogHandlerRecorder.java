@@ -64,6 +64,7 @@ public class KafkaLogHandlerRecorder {
         loggingLogger.info("Processing config to create appender: " + config);
 
         KafkaLog4jAppender appender = new KafkaLog4jAppender();
+        loggingLogger.info("Appender instance created, setting it up.");
         appender.setBrokerList(config.brokerList);
         appender.setTopic(config.topic);
 
