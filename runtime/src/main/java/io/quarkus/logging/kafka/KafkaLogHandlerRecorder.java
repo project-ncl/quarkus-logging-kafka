@@ -94,7 +94,7 @@ public class KafkaLogHandlerRecorder {
         }
 
         loggingLogger.info("Created " + appender + " with values:\n"
-                + "  BrokerList: " + appender.getBrokerList() + "\n"
+                + "brokerList: " + appender.getBrokerList() + "\n"
                 + "topic: " + appender.getTopic() + "\n"
                 + "compressionType: " + appender.getCompressionType() + "\n"
                 + "sSecurityProtocol: " + appender.getSecurityProtocol() + "\n"
@@ -112,6 +112,10 @@ public class KafkaLogHandlerRecorder {
                 + "deliveryTimeoutMs: " + appender.getDeliveryTimeoutMs() + "\n"
                 + "ignoreExceptions: " + appender.getIgnoreExceptions() + "\n"
                 + "syncSend: " + appender.getSyncSend());
+
+        loggingLogger.info("Running appender.activateOptions()");
+        appender.activateOptions();
+        loggingLogger.info("Finished appender.activateOptions()");
 
         return appender;
     }
