@@ -86,6 +86,13 @@ public class KafkaLogHandlerRecorder {
         config.ignoreExceptions.ifPresent(ignoreExceptions -> appender.setIgnoreExceptions(ignoreExceptions));
         config.syncSend.ifPresent(syncSend -> appender.setSyncSend(syncSend));
 
+        Integer maxBlockMs = null;
+        try {
+            maxBlockMs = appender.getMaxBlockMs();
+        } catch (NullPointerException ex) {
+            loggingLogger.info("maxBlockMs is null");
+        }
+
         loggingLogger.info("Created " + appender + " with values:\n"
                 + "  BrokerList: " + appender.getBrokerList() + "\n"
                 + "topic: " + appender.getTopic() + "\n"
@@ -99,7 +106,7 @@ public class KafkaLogHandlerRecorder {
                 + "saslKerberosServiceName: " + appender.getSaslKerberosServiceName() + "\n"
                 + "clientJaasConfPath: " + appender.getClientJaasConfPath() + "\n"
                 + "kerb5ConfPath: " + appender.getKerb5ConfPath() + "\n"
-                + "maxBlockMs: " + appender.getMaxBlockMs() + "\n"
+                + "maxBlockMs: " + maxBlockMs + "\n"
                 + "retries: " + appender.getRetries() + "\n"
                 + "requiredNumAcks: " + appender.getRequiredNumAcks() + "\n"
                 + "deliveryTimeoutMs: " + appender.getDeliveryTimeoutMs() + "\n"
