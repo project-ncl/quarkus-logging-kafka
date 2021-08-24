@@ -4,7 +4,6 @@ import java.util.Optional;
 import java.util.logging.Level;
 
 import org.apache.kafka.log4jappender.KafkaLog4jAppender;
-import org.jboss.logmanager.formatters.JsonFormatter;
 import org.jboss.logmanager.handlers.AsyncHandler;
 import org.jboss.logmanager.handlers.AsyncHandler.OverflowAction;
 
@@ -14,6 +13,7 @@ import io.quarkus.runtime.annotations.ConfigRoot;
 
 @ConfigRoot(phase = ConfigPhase.RUN_TIME, name = "log.handler.kafka")
 public class KafkaLogConfig {
+
     /**
      * Determine whether to enable the Kafka logging handler
      */
@@ -129,14 +129,6 @@ public class KafkaLogConfig {
     public Optional<Boolean> syncSend;
 
     /**
-     * Date format pattern used in {@link JsonFormatter} used in the logging Handler.
-     *
-     * @see java.text.SimpleDateFormat
-     */
-    @ConfigItem(defaultValue = "yyyy-MM-dd HH:mm:ss,SSS")
-    public String timestampPattern;
-
-    /**
      * The logging-kafka log level.
      */
     @ConfigItem(defaultValue = "ALL")
@@ -169,9 +161,8 @@ public class KafkaLogConfig {
                 + saslKerberosServiceName + ", clientJaasConfPath=" + clientJaasConfPath + ", kerb5ConfPath="
                 + kerb5ConfPath + ", maxBlockMs=" + maxBlockMs + ", retries=" + retries + ", requiredNumAcks="
                 + requiredNumAcks + ", deliveryTimeoutMs=" + deliveryTimeoutMs + ", ignoreExceptions="
-                + ignoreExceptions + ", syncSend=" + syncSend + ", timestampPattern=" + timestampPattern + ", level="
-                + level + ", async=" + async + ", asyncQueueLength=" + asyncQueueLength + ", asyncOverflowAction="
-                + asyncOverflowAction + "]";
+                + ignoreExceptions + ", syncSend=" + syncSend + ", level=" + level + ", async=" + async
+                + ", asyncQueueLength=" + asyncQueueLength + ", asyncOverflowAction=" + asyncOverflowAction + "]";
     }
 
 }
