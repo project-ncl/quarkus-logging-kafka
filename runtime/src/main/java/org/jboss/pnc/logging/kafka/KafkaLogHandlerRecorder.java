@@ -1,4 +1,4 @@
-package io.quarkus.logging.kafka;
+package org.jboss.pnc.logging.kafka;
 
 import java.util.Optional;
 import java.util.logging.Formatter;
@@ -18,7 +18,7 @@ import io.quarkus.runtime.annotations.Recorder;
 /**
  * The recorder providing configured {@link KafkaLog4jAppender} wrapped in a {@link Log4jAppenderHandler}. Optionally
  * the result can be wrapped in an {@link AsyncHandler} instance. The format of the produced log can be defined by
- * a {@link Formatter} or a {@link Layout}. That can be injected by implementation of {@link FormatterOrLayoutFactory}.
+ * a {@link Formatter} or a {@link Layout}. That can be injected by implementation of {@link DefaultFormatterOrLayoutFactory}.
  * If no implementation of that interface is available, it uses {@link net.logstash.log4j.JSONEventLayoutV1}.
  *
  * @author <a href="mailto:pkocandr@redhat.com">Petr Kocandrle</a>
@@ -26,10 +26,10 @@ import io.quarkus.runtime.annotations.Recorder;
 @Recorder
 public class KafkaLogHandlerRecorder {
 
-    private static final Logger loggingLogger = Logger.getLogger("io.quarkus.logging.kafka");
+    private static final Logger loggingLogger = Logger.getLogger("org.jboss.pnc.logging.kafka.KafkaLogHandlerRecorder");
 
     @Inject
-    private Optional<FormatterOrLayoutFactory> formatterOrLayoutFactory;
+    private FormatterOrLayout formatterOrLayout;
 
     /**
      * Kafka logging handler initialization based on the config.
@@ -43,28 +43,23 @@ public class KafkaLogHandlerRecorder {
         }
 
         KafkaLog4jAppender appender = createAppender(config);
-        loggingLogger.info("Configured with layout: " + appender.getLayout());
 
         Log4jAppenderHandler kafkaHandler = new Log4jAppenderHandler(appender, false);
 
         kafkaHandler.setLevel(config.level);
 
         // set a formatter or a layout
-        FormatterOrLayout formatterOrLayout;
-        if (formatterOrLayoutFactory != null && formatterOrLayoutFactory.isPresent()) {
-            formatterOrLayout = formatterOrLayoutFactory.get().getFormatterOrLayout();
-        } else {
-            formatterOrLayout = LogstashJSONEventLayoutV1Factory.getInstance().getFormatterOrLayout();
-        }
         if (formatterOrLayout == null) {
             loggingLogger.warning("No formatter or layout for kafka logger provided.");
         } else if (formatterOrLayout.hasLayout()) {
             appender.setLayout(formatterOrLayout.getLayout());
+            loggingLogger.config("Configured with layout: " + appender.getLayout());
         } else if (formatterOrLayout.hasFormatter()) {
             kafkaHandler.setFormatter(formatterOrLayout.getFormatter());
+            loggingLogger.config("Configured with formatter: " + kafkaHandler.getFormatter());
         } else {
             loggingLogger.warning(
-                    "No formatter or layout for kafka logger was prensent in the FormatterOrLayout instance: "
+                    "No formatter nor layout for kafka logger was prensent in the FormatterOrLayout instance: "
                             + formatterOrLayout);
         }
 
@@ -91,7 +86,7 @@ public class KafkaLogHandlerRecorder {
     }
 
     private KafkaLog4jAppender createAppender(final KafkaLogConfig config) {
-        loggingLogger.info("Processing config to create KafkaLog4jAppender: " + config);
+        loggingLogger.config("Processing config to create KafkaLog4jAppender: " + config);
 
         KafkaLog4jAppender appender = new KafkaLog4jAppender();
         appender.setBrokerList(config.brokerList);

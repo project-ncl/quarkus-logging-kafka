@@ -1,4 +1,3 @@
----
 name: "Logging Kafka"
 metadata:
   keywords:
@@ -9,3 +8,4 @@ metadata:
   categories:
   - "core"
   status: "preview"
+

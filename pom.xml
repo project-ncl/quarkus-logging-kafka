@@ -1,50 +1,97 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <parent>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>org.jboss.pnc.logging</groupId>
+  <artifactId>quarkus-logging-kafka-parent</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+  <name>Quarkus - Logging - Kafka - Parent</name>
+  <packaging>pom</packaging>
+
+  <modules>
+    <module>deployment</module>
+    <module>runtime</module>
+  </modules>
+
+  <licenses>
+    <license>
+      <name>Apache License, Version 2.0</name>
+      <distribution>repo</distribution>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
+    </license>
+  </licenses>
+
+  <scm>
+    <connection>scm:git:http://github.com/project-ncl/quarkus-logging-kafka.git</connection>
+    <developerConnection>scm:git:git@github.com:project-ncl/quarkus-logging-kafka.git</developerConnection>
+    <url>http://github.com/project-ncl/quarkus-logging-kafka</url>
+    <tag>HEAD</tag>
+  </scm>
+
+  <properties>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>11</maven.compiler.source>
+    <maven.compiler.target>11</maven.compiler.target>
+    <maven.compiler.parameters>true</maven.compiler.parameters>
+
+    <quarkus.version>2.2.1.Final</quarkus.version>
+    <log4j-jboss-logmanager.version>1.2.2.Final</log4j-jboss-logmanager.version>
+    <kafka.version>2.8.0</kafka.version>
+    <jsonevent-layout.version>1.7</jsonevent-layout.version>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.jboss.pnc.logging</groupId>
+        <artifactId>quarkus-logging-kafka</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.jboss.pnc.logging</groupId>
+        <artifactId>quarkus-logging-kafka-deployment</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+
+      <dependency>
         <groupId>io.quarkus</groupId>
-        <artifactId>quarkus-extensions-parent</artifactId>
-        <version>1.13.7.Final</version>
-    </parent>
+        <artifactId>quarkus-bom</artifactId>
+        <version>${quarkus.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
 
-    <artifactId>quarkus-logging-kafka-parent</artifactId>
-    <name>Quarkus - Logging - Kafka</name>
-    <packaging>pom</packaging>
+      <dependency>
+        <groupId>org.jboss.logmanager</groupId>
+        <artifactId>log4j-jboss-logmanager</artifactId>
+        <version>${log4j-jboss-logmanager.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.kafka</groupId>
+        <artifactId>kafka-log4j-appender</artifactId>
+        <version>${kafka.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>net.logstash.log4j</groupId>
+        <artifactId>jsonevent-layout</artifactId>
+        <version>${jsonevent-layout.version}</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
-    <modules>
-        <module>deployment</module>
-        <module>runtime</module>
-    </modules>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>io.quarkus</groupId>
-                <artifactId>quarkus-logging-kafka</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.quarkus</groupId>
-                <artifactId>quarkus-logging-kafka-deployment</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.jboss.logmanager</groupId>
-                <artifactId>log4j-jboss-logmanager</artifactId>
-                <version>1.2.2.Final</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.kafka</groupId>
-                <artifactId>kafka-log4j-appender</artifactId>
-                <version>2.8.0</version>
-            </dependency>
-            <dependency>
-                <groupId>net.logstash.log4j</groupId>
-                <artifactId>jsonevent-layout</artifactId>
-                <version>1.7</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>io.quarkus</groupId>
+          <artifactId>quarkus-maven-plugin</artifactId>
+          <version>${quarkus.version}</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
 
 </project>

@@ -1,4 +1,4 @@
-package io.quarkus.logging.kafka;
+package org.jboss.pnc.logging.kafka;
 
 import java.util.logging.Formatter;
 
