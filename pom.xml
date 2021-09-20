@@ -39,9 +39,10 @@
 
     <compiler-plugin.version>3.8.1</compiler-plugin.version>
 
-    <log4j-jboss-logmanager.version>1.2.2.Final</log4j-jboss-logmanager.version>
+    <commons-lang.version>2.6</commons-lang.version>
+    <json-smart.version>1.1.1</json-smart.version>
     <kafka.version>2.8.0</kafka.version>
-    <jsonevent-layout.version>1.7</jsonevent-layout.version>
+    <log4j-jboss-logmanager.version>1.2.2.Final</log4j-jboss-logmanager.version>
     <quarkus.version>2.2.1.Final</quarkus.version>
   </properties>
 
@@ -77,9 +78,14 @@
         <version>${kafka.version}</version>
       </dependency>
       <dependency>
-        <groupId>net.logstash.log4j</groupId>
-        <artifactId>jsonevent-layout</artifactId>
-        <version>${jsonevent-layout.version}</version>
+        <groupId>commons-lang</groupId>
+        <artifactId>commons-lang</artifactId>
+        <version>${commons-lang.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>net.minidev</groupId>
+        <artifactId>json-smart</artifactId>
+        <version>${json-smart.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

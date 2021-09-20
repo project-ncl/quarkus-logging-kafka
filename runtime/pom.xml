@@ -45,8 +45,12 @@
       </exclusions>
     </dependency>
     <dependency>
-      <groupId>net.logstash.log4j</groupId>
-      <artifactId>jsonevent-layout</artifactId>
+        <groupId>commons-lang</groupId>
+        <artifactId>commons-lang</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>net.minidev</groupId>
+      <artifactId>json-smart</artifactId>
     </dependency>
   </dependencies>
 

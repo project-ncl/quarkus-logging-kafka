@@ -18,7 +18,7 @@ import io.quarkus.runtime.annotations.Recorder;
 /**
  * The recorder providing configured {@link KafkaLog4jAppender} wrapped in a {@link Log4jAppenderHandler}. Optionally
  * the result can be wrapped in an {@link AsyncHandler} instance. The format of the produced log can be defined by
- * a {@link Formatter} or a {@link Layout}. That can be injected by implementation of {@link DefaultFormatterOrLayoutFactory}.
+ * a {@link Formatter} or a {@link Layout}. That can be injected by implementation of {@link DefaultFormatterOrLayoutProducer}.
  * If no implementation of that interface is available, it uses {@link net.logstash.log4j.JSONEventLayoutV1}.
  *
  * @author <a href="mailto:pkocandr@redhat.com">Petr Kocandrle</a>
@@ -29,7 +29,7 @@ public class KafkaLogHandlerRecorder {
     private static final Logger loggingLogger = Logger.getLogger("org.jboss.pnc.logging.kafka.KafkaLogHandlerRecorder");
 
     @Inject
-    private FormatterOrLayout formatterOrLayout;
+    FormatterOrLayout formatterOrLayout;
 
     /**
      * Kafka logging handler initialization based on the config.
@@ -51,7 +51,14 @@ public class KafkaLogHandlerRecorder {
         // set a formatter or a layout
         if (formatterOrLayout == null) {
             loggingLogger.warning("No formatter or layout for kafka logger provided.");
-        } else if (formatterOrLayout.hasLayout()) {
+            String timestampPattern = null;
+            if (config.timestampPattern.isPresent()) {
+                timestampPattern = config.timestampPattern.get();
+            }
+            formatterOrLayout = DefaultFormatterOrLayoutProducer.kafkaLayout(timestampPattern);
+        }
+
+        if (formatterOrLayout.hasLayout()) {
             appender.setLayout(formatterOrLayout.getLayout());
             loggingLogger.config("Configured with layout: " + appender.getLayout());
         } else if (formatterOrLayout.hasFormatter()) {
@@ -59,7 +66,7 @@ public class KafkaLogHandlerRecorder {
             loggingLogger.config("Configured with formatter: " + kafkaHandler.getFormatter());
         } else {
             loggingLogger.warning(
-                    "No formatter nor layout for kafka logger was prensent in the FormatterOrLayout instance: "
+                    "No formatter nor layout for kafka logger was present in the FormatterOrLayout instance: "
                             + formatterOrLayout);
         }
 

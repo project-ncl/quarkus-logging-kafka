@@ -33,6 +33,12 @@ public class KafkaLogConfig {
     public String topic;
 
     /**
+     * The pattern used in message formatter to format datetime of log messages.
+     */
+    @ConfigItem
+    public Optional<String> timestampPattern;
+
+    /**
      * KafkaLog4jAppender's {@link KafkaLog4jAppender#getCompressionType() compressionType}.
      */
     @ConfigItem
