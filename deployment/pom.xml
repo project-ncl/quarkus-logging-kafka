@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.jboss.pnc.logging</groupId>
     <artifactId>quarkus-logging-kafka-parent</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1-SNAPSHOT</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
 
