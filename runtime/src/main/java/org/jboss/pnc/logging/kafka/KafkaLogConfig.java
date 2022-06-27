@@ -157,6 +157,13 @@ public class KafkaLogConfig {
     @ConfigItem
     public Optional<OverflowAction> asyncOverflowAction;
 
+    /**
+     * Pattern for filtering messages by logger name. When set, only messages with logger name matching the pattern will
+     * be accepted by the appender.
+     */
+    @ConfigItem
+    public Optional<String> filterLoggerNamePattern;
+
     @Override
     public String toString() {
         return "KafkaLogConfig [enabled=" + enabled + ", brokerList=" + brokerList + ", topic=" + topic
@@ -168,7 +175,8 @@ public class KafkaLogConfig {
                 + kerb5ConfPath + ", maxBlockMs=" + maxBlockMs + ", retries=" + retries + ", requiredNumAcks="
                 + requiredNumAcks + ", deliveryTimeoutMs=" + deliveryTimeoutMs + ", ignoreExceptions="
                 + ignoreExceptions + ", syncSend=" + syncSend + ", level=" + level + ", async=" + async
-                + ", asyncQueueLength=" + asyncQueueLength + ", asyncOverflowAction=" + asyncOverflowAction + "]";
+                + ", asyncQueueLength=" + asyncQueueLength + ", asyncOverflowAction=" + asyncOverflowAction
+                + ", filterLoggerNamePattern=" + filterLoggerNamePattern + "]";
     }
 
 }

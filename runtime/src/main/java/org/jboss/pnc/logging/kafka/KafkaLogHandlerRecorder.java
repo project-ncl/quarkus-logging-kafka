@@ -51,10 +51,7 @@ public class KafkaLogHandlerRecorder {
         // set a formatter or a layout
         if (formatterOrLayout == null) {
             loggingLogger.warning("No formatter or layout for kafka logger provided.");
-            String timestampPattern = null;
-            if (config.timestampPattern.isPresent()) {
-                timestampPattern = config.timestampPattern.get();
-            }
+            String timestampPattern = config.timestampPattern.orElse(null);
             formatterOrLayout = DefaultFormatterOrLayoutProducer.kafkaLayout(timestampPattern);
         }
 
@@ -69,6 +66,8 @@ public class KafkaLogHandlerRecorder {
                     "No formatter nor layout for kafka logger was present in the FormatterOrLayout instance: "
                             + formatterOrLayout);
         }
+
+        config.filterLoggerNamePattern.ifPresent(s -> kafkaHandler.setFilter(new LoggerNamePatternFilter(s)));
 
         ExtHandler rootHandler;
 
