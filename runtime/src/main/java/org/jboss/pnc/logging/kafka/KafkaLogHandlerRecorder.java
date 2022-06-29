@@ -107,6 +107,8 @@ public class KafkaLogHandlerRecorder {
         config.sslKeystorePassword.ifPresent(password -> appender.setSslKeystorePassword(password));
         config.saslKerberosServiceName.ifPresent(name -> appender.setSaslKerberosServiceName(name));
         config.clientJaasConfPath.ifPresent(path -> appender.setClientJaasConfPath(path));
+        config.clientJaasConf.ifPresent(clientJaasConf -> appender.setClientJaasConf(clientJaasConf));
+        config.saslMechanism.ifPresent(saslMechanism -> appender.setSaslMechanism(saslMechanism));
         config.kerb5ConfPath.ifPresent(path -> appender.setKerb5ConfPath(path));
         config.maxBlockMs.ifPresent(maxBlockMs -> appender.setMaxBlockMs(maxBlockMs));
 
