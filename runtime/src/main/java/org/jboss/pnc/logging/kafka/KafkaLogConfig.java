@@ -93,6 +93,18 @@ public class KafkaLogConfig {
     public Optional<String> clientJaasConfPath;
 
     /**
+     * Provide the client Jaas SASL login details via a string
+     */
+    @ConfigItem
+    public Optional<String> clientJaasConf;
+
+    /**
+     * Allow user to specify SASL mechanism for authentication to Kafka.
+     */
+    @ConfigItem
+    public Optional<String> saslMechanism;
+
+    /**
      * KafkaLog4jAppender's {@link KafkaLog4jAppender#getKerb5ConfPath() kerb5ConfPath}.
      */
     @ConfigItem
@@ -171,7 +183,8 @@ public class KafkaLogConfig {
                 + ", sslTruststoreLocation=" + sslTruststoreLocation + ", sslTruststorePassword="
                 + sslTruststorePassword + ", sslKeystoreType=" + sslKeystoreType + ", sslKeystoreLocation="
                 + sslKeystoreLocation + ", sslKeystorePassword=" + sslKeystorePassword + ", saslKerberosServiceName="
-                + saslKerberosServiceName + ", clientJaasConfPath=" + clientJaasConfPath + ", kerb5ConfPath="
+                + saslKerberosServiceName + ", clientJaasConfPath=" + clientJaasConfPath
+                + ", clientJaasConf=" + clientJaasConf + ", saslMechanism=" + saslMechanism + ", kerb5ConfPath="
                 + kerb5ConfPath + ", maxBlockMs=" + maxBlockMs + ", retries=" + retries + ", requiredNumAcks="
                 + requiredNumAcks + ", deliveryTimeoutMs=" + deliveryTimeoutMs + ", ignoreExceptions="
                 + ignoreExceptions + ", syncSend=" + syncSend + ", level=" + level + ", async=" + async
