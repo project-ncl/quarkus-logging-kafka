@@ -96,7 +96,7 @@ public class KafkaLogConfig {
      * Provide the client Jaas SASL login details via a string
      */
     @ConfigItem
-    public Optional<String> clientJaasConf;
+    public Optional<String> saslJaasConf;
 
     /**
      * Allow user to specify SASL mechanism for authentication to Kafka.
@@ -184,8 +184,9 @@ public class KafkaLogConfig {
                 + sslTruststorePassword + ", sslKeystoreType=" + sslKeystoreType + ", sslKeystoreLocation="
                 + sslKeystoreLocation + ", sslKeystorePassword=" + sslKeystorePassword + ", saslKerberosServiceName="
                 + saslKerberosServiceName + ", clientJaasConfPath=" + clientJaasConfPath
-                + ", clientJaasConf=" + clientJaasConf + ", saslMechanism=" + saslMechanism + ", kerb5ConfPath="
-                + kerb5ConfPath + ", maxBlockMs=" + maxBlockMs + ", retries=" + retries + ", requiredNumAcks="
+                + ", saslJaasConf=" + (saslJaasConf.isPresent() ? "[redacted]" : Optional.empty())
+                + ", saslMechanism=" + saslMechanism + ", kerb5ConfPath=" + kerb5ConfPath
+                + ", maxBlockMs=" + maxBlockMs + ", retries=" + retries + ", requiredNumAcks="
                 + requiredNumAcks + ", deliveryTimeoutMs=" + deliveryTimeoutMs + ", ignoreExceptions="
                 + ignoreExceptions + ", syncSend=" + syncSend + ", level=" + level + ", async=" + async
                 + ", asyncQueueLength=" + asyncQueueLength + ", asyncOverflowAction=" + asyncOverflowAction
