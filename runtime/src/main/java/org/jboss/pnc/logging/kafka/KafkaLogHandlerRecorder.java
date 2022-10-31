@@ -42,7 +42,17 @@ public class KafkaLogHandlerRecorder {
             return new RuntimeValue<>(Optional.empty());
         }
 
-        KafkaLog4jAppender appender = createAppender(config);
+        KafkaLog4jAppender appender;
+        try {
+            appender = createAppender(config);
+        } catch (RuntimeException e) {
+            System.err.println("[ERROR] Couldn't start kafka-logging due to Kafka server issues");
+            e.printStackTrace();
+            // If the Kafka appender cannot be created due to Kafka server issues, catch the exception and just consider
+            // the handler as not enabled. A restart of the application is required to switch on the kafka log handler
+            // once the Kafka server has recovered
+            return new RuntimeValue<>(Optional.empty());
+        }
 
         Log4jAppenderHandler kafkaHandler = new Log4jAppenderHandler(appender, false);
 
