@@ -57,7 +57,7 @@
     <json-smart.version>2.4.8</json-smart.version>
     <kafka.version>3.3.1</kafka.version>
     <log4j-jboss-logmanager.version>1.3.0.Final</log4j-jboss-logmanager.version>
-    <quarkus.version>2.13.3.Final</quarkus.version>
+    <quarkus.version>2.14.1.Final</quarkus.version>
     <version.javadoc.plugin>3.4.1</version.javadoc.plugin>
     <version.source.plugin>3.2.1</version.source.plugin>
     <tagSuffix />
