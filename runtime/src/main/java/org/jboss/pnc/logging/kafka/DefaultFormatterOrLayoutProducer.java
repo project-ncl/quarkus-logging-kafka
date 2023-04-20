@@ -1,6 +1,6 @@
 package org.jboss.pnc.logging.kafka;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Layout;
 import org.jboss.logmanager.formatters.JsonFormatter;
 import org.jboss.logmanager.formatters.StructuredFormatter.Key;
