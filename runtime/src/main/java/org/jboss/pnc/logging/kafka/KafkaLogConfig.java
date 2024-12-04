@@ -1,5 +1,7 @@
 package org.jboss.pnc.logging.kafka;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Level;
 
@@ -13,6 +15,7 @@ import io.quarkus.runtime.annotations.ConfigRoot;
 
 @ConfigRoot(phase = ConfigPhase.RUN_TIME, name = "log.handler.kafka")
 public class KafkaLogConfig {
+    private static final String KAFKA_HANDLER_CONFIG_PREFIX = "quarkus.log.handler.kafka.";
 
     /**
      * Determine whether to enable the Kafka logging handler
@@ -193,4 +196,37 @@ public class KafkaLogConfig {
                 + ", filterLoggerNamePattern=" + filterLoggerNamePattern + "]";
     }
 
+    public Map<String, Object> toMap() {
+        Map<String, Object> kafkaLogConfig = new HashMap<>();
+
+        kafkaLogConfig.put(KAFKA_HANDLER_CONFIG_PREFIX + "enabled", enabled);
+        kafkaLogConfig.put(KAFKA_HANDLER_CONFIG_PREFIX + "broker-list", brokerList);
+        kafkaLogConfig.put(KAFKA_HANDLER_CONFIG_PREFIX + "topic", topic);
+        timestampPattern.ifPresent(value -> kafkaLogConfig.put(KAFKA_HANDLER_CONFIG_PREFIX + "timestamp-pattern", value));
+        compressionType.ifPresent(value -> kafkaLogConfig.put(KAFKA_HANDLER_CONFIG_PREFIX + "compression-type", value));
+        securityProtocol.ifPresent(value -> kafkaLogConfig.put(KAFKA_HANDLER_CONFIG_PREFIX + "security-protocol", value));
+        sslTruststoreLocation.ifPresent(value -> kafkaLogConfig.put(KAFKA_HANDLER_CONFIG_PREFIX + "ssl-truststore-location", value));
+        sslTruststorePassword.ifPresent(value -> kafkaLogConfig.put(KAFKA_HANDLER_CONFIG_PREFIX + "ssl-truststore-password", value));
+        sslKeystoreType.ifPresent(value -> kafkaLogConfig.put(KAFKA_HANDLER_CONFIG_PREFIX + "ssl-keystore-type", value));
+        sslKeystoreLocation.ifPresent(value -> kafkaLogConfig.put(KAFKA_HANDLER_CONFIG_PREFIX + "ssl-keystore-location", value));
+        sslKeystorePassword.ifPresent(value -> kafkaLogConfig.put(KAFKA_HANDLER_CONFIG_PREFIX + "ssl-keystore-password", value));
+        saslKerberosServiceName.ifPresent(value -> kafkaLogConfig.put(KAFKA_HANDLER_CONFIG_PREFIX + "sasl-kerberos-service-name", value));
+        clientJaasConfPath.ifPresent(value -> kafkaLogConfig.put(KAFKA_HANDLER_CONFIG_PREFIX + "client-jaas-conf-path", value));
+        saslJaasConf.ifPresent(value -> kafkaLogConfig.put(KAFKA_HANDLER_CONFIG_PREFIX + "sasl-jaas-conf", value));
+        saslMechanism.ifPresent(value -> kafkaLogConfig.put(KAFKA_HANDLER_CONFIG_PREFIX + "sasl-mechanism", value));
+        kerb5ConfPath.ifPresent(value -> kafkaLogConfig.put(KAFKA_HANDLER_CONFIG_PREFIX + "kerb5-conf-path", value));
+        maxBlockMs.ifPresent(value -> kafkaLogConfig.put(KAFKA_HANDLER_CONFIG_PREFIX + "max-block-ms", value));
+        retries.ifPresent(value -> kafkaLogConfig.put(KAFKA_HANDLER_CONFIG_PREFIX + "retries", value));
+        requiredNumAcks.ifPresent(value -> kafkaLogConfig.put(KAFKA_HANDLER_CONFIG_PREFIX + "required-num-acks", value));
+        deliveryTimeoutMs.ifPresent(value -> kafkaLogConfig.put(KAFKA_HANDLER_CONFIG_PREFIX + "delivery-timeout-ms", value));
+        ignoreExceptions.ifPresent(value -> kafkaLogConfig.put(KAFKA_HANDLER_CONFIG_PREFIX + "ignore-exceptions", value));
+        syncSend.ifPresent(value -> kafkaLogConfig.put(KAFKA_HANDLER_CONFIG_PREFIX + "sync-send", value));
+        kafkaLogConfig.put(KAFKA_HANDLER_CONFIG_PREFIX + "level", level);
+        kafkaLogConfig.put(KAFKA_HANDLER_CONFIG_PREFIX + "async", async);
+        asyncQueueLength.ifPresent(value -> kafkaLogConfig.put(KAFKA_HANDLER_CONFIG_PREFIX + "async-queue-length", value));
+        asyncOverflowAction.ifPresent(value -> kafkaLogConfig.put(KAFKA_HANDLER_CONFIG_PREFIX + "async-overflow-action", value));
+        filterLoggerNamePattern.ifPresent(value -> kafkaLogConfig.put(KAFKA_HANDLER_CONFIG_PREFIX + "filter-logger-name-pattern", value));
+
+        return kafkaLogConfig;
+    }
 }
