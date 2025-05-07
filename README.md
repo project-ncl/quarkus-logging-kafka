@@ -67,3 +67,24 @@ Building the application can be done by running:
 ```bash
 mvn clean install
 ```
+
+# Warning using log4j-over-slf4j
+This doesn't work if the log4j-over-slf4j dependency is present in the final jar
+and specifically if the `AppenderSkeleton` class is used from that dependency.
+
+This is because the [latter](https://github.com/qos-ch/slf4j/blob/master/log4j-over-slf4j/src/main/java/org/apache/log4j/AppenderSkeleton.java) only implements `OptionHandler`, whereas the newer class also implements the `Appender` [class](https://github.com/apache/logging-log4j2/blob/2.x/log4j-1.2-api/src/main/java/org/apache/log4j/AppenderSkeleton.java). We need the `Appender` implementation clause for quarkus-logging-kafka.
+
+To workaround this, exclude this jar from any dependency that pulls log4j-over-slf4j in your pom.xml. Here's an example:
+```
+<dependency>
+    <groupId>com.redhat.red.build</groupId>
+    <artifactId>kojiji</artifactId>
+    <version>2.22</version>
+    <exclusions>
+        <exclusion>
+            <groupId>org.slf4j</groupId>
+            <artifactId>log4j-over-slf4j</artifactId>
+        </exclusion>
+    </exclusions>
+</dependency>
+```
