@@ -3,194 +3,155 @@ package org.jboss.pnc.logging.kafka;
 import java.util.Optional;
 import java.util.logging.Level;
 
+import io.quarkus.runtime.annotations.ConfigPhase;
+import io.quarkus.runtime.annotations.ConfigRoot;
+import io.smallrye.config.ConfigMapping;
+import io.smallrye.config.WithDefault;
 import org.apache.kafka.log4jappender.KafkaLog4jAppender;
 import org.jboss.logmanager.handlers.AsyncHandler;
 import org.jboss.logmanager.handlers.AsyncHandler.OverflowAction;
 
-import io.quarkus.runtime.annotations.ConfigItem;
-import io.quarkus.runtime.annotations.ConfigPhase;
-import io.quarkus.runtime.annotations.ConfigRoot;
-
-@ConfigRoot(phase = ConfigPhase.RUN_TIME, name = "log.handler.kafka")
-public class KafkaLogConfig {
+@ConfigMapping(prefix = "log.handler.kafka")
+@ConfigRoot(phase = ConfigPhase.RUN_TIME)
+public interface KafkaLogConfig {
 
     /**
      * Determine whether to enable the Kafka logging handler
      */
-    @ConfigItem
-    public boolean enabled;
+    @WithDefault("false")
+    boolean enabled();
 
     /**
      * KafkaLog4jAppender's {@link KafkaLog4jAppender#getBrokerList() brokerList}.
      */
-    @ConfigItem
-    public String brokerList;
+    String brokerList();
 
     /**
      * KafkaLog4jAppender's {@link KafkaLog4jAppender#getTopic() topic}.
      */
-    @ConfigItem
-    public String topic;
+    String topic();
 
     /**
      * The pattern used in message formatter to format datetime of log messages.
      */
-    @ConfigItem
-    public Optional<String> timestampPattern;
+    Optional<String> timestampPattern();
 
     /**
      * KafkaLog4jAppender's {@link KafkaLog4jAppender#getCompressionType() compressionType}.
      */
-    @ConfigItem
-    public Optional<String> compressionType;
+    Optional<String> compressionType();
 
     /**
      * KafkaLog4jAppender's {@link KafkaLog4jAppender#getSecurityProtocol() securityProtocol}.
      */
-    @ConfigItem
-    public Optional<String> securityProtocol;
+    Optional<String> securityProtocol();
 
     /**
      * KafkaLog4jAppender's {@link KafkaLog4jAppender#getSslTruststoreLocation() sslTruststoreLocation}.
      */
-    @ConfigItem
-    public Optional<String> sslTruststoreLocation;
+    Optional<String> sslTruststoreLocation();
 
     /**
      * KafkaLog4jAppender's {@link KafkaLog4jAppender#getSslTruststorePassword() sslTruststorePassword}.
      */
-    @ConfigItem
-    public Optional<String> sslTruststorePassword;
+    Optional<String> sslTruststorePassword();
 
     /**
      * KafkaLog4jAppender's {@link KafkaLog4jAppender#getSslKeystoreType() sslKeystoreType}
      */
-    @ConfigItem
-    public Optional<String> sslKeystoreType;
+    Optional<String> sslKeystoreType();
 
     /**
      * KafkaLog4jAppender's {@link KafkaLog4jAppender#getSslKeystoreLocation() sslKeystoreLocation}.
      */
-    @ConfigItem
-    public Optional<String> sslKeystoreLocation;
+    Optional<String> sslKeystoreLocation();
 
     /**
      * KafkaLog4jAppender's {@link KafkaLog4jAppender#getSslKeystorePassword() sslKeystorePassword}.
      */
-    @ConfigItem
-    public Optional<String> sslKeystorePassword;
+    Optional<String> sslKeystorePassword();
 
     /**
      * KafkaLog4jAppender's {@link KafkaLog4jAppender#getSaslKerberosServiceName() saslKerberosServiceName}.
      */
-    @ConfigItem
-    public Optional<String> saslKerberosServiceName;
+    Optional<String> saslKerberosServiceName();
 
     /**
      * KafkaLog4jAppender's {@link KafkaLog4jAppender#getClientJaasConfPath() clientJaasConfPath}.
      */
-    @ConfigItem
-    public Optional<String> clientJaasConfPath;
+    Optional<String> clientJaasConfPath();
 
     /**
      * Provide the client Jaas SASL login details via a string
      */
-    @ConfigItem
-    public Optional<String> saslJaasConf;
+    Optional<String> saslJaasConf();
 
     /**
      * Allow user to specify SASL mechanism for authentication to Kafka.
      */
-    @ConfigItem
-    public Optional<String> saslMechanism;
+    Optional<String> saslMechanism();
 
     /**
      * KafkaLog4jAppender's {@link KafkaLog4jAppender#getKerb5ConfPath() kerb5ConfPath}.
      */
-    @ConfigItem
-    public Optional<String> kerb5ConfPath;
+    Optional<String> kerb5ConfPath();
 
     /**
      * KafkaLog4jAppender's {@link KafkaLog4jAppender#getMaxBlockMs() maxBlockMs}.
      */
-    @ConfigItem
-    public Optional<Integer> maxBlockMs;
+    Optional<Integer> maxBlockMs();
 
     /**
      * KafkaLog4jAppender's {@link KafkaLog4jAppender#getRetries() retries}.
      */
-    @ConfigItem
-    public Optional<Integer> retries;
+    Optional<Integer> retries();
 
     /**
      * KafkaLog4jAppender's {@link KafkaLog4jAppender#getRequiredNumAcks() requiredNumAcks}.
      */
-    @ConfigItem
-    public Optional<Integer> requiredNumAcks;
+    Optional<Integer> requiredNumAcks();
 
     /**
      * KafkaLog4jAppender's {@link KafkaLog4jAppender#getDeliveryTimeoutMs() deliveryTimeoutMs}.
      */
-    @ConfigItem
-    public Optional<Integer> deliveryTimeoutMs;
+    Optional<Integer> deliveryTimeoutMs();
 
     /**
      * KafkaLog4jAppender's {@link KafkaLog4jAppender#getIgnoreExceptions() ignoreExceptions}.
      */
-    @ConfigItem
-    public Optional<Boolean> ignoreExceptions;
+    Optional<Boolean> ignoreExceptions();
 
     /**
      * KafkaLog4jAppender's {@link KafkaLog4jAppender#getSyncSend() syncSend}.
      */
-    @ConfigItem
-    public Optional<Boolean> syncSend;
+    Optional<Boolean> syncSend();
 
     /**
      * The logging-kafka log level.
      */
-    @ConfigItem(defaultValue = "ALL")
-    public Level level;
+    @WithDefault("ALL")
+    Level level();
 
     /**
      * Determine whether the log handler should be wrapped in an instance of {@link AsyncHandler}. {@code true} by
      * default.
      */
-    @ConfigItem(defaultValue = "true")
-    public boolean async;
+    @WithDefault("true")
+    boolean async();
+
     /**
      * AsyncHandler's {@link AsyncHandler#getQueueLength() queueLength}
      */
-    @ConfigItem
-    public Optional<Integer> asyncQueueLength;
+    Optional<Integer> asyncQueueLength();
+
     /**
      * AsyncHandler's {@link AsyncHandler#getOverflowAction() overflowAction}
      */
-    @ConfigItem
-    public Optional<OverflowAction> asyncOverflowAction;
+    Optional<OverflowAction> asyncOverflowAction();
 
     /**
      * Pattern for filtering messages by logger name. When set, only messages with logger name matching the pattern will
      * be accepted by the appender.
      */
-    @ConfigItem
-    public Optional<String> filterLoggerNamePattern;
-
-    @Override
-    public String toString() {
-        return "KafkaLogConfig [enabled=" + enabled + ", brokerList=" + brokerList + ", topic=" + topic
-                + ", compressionType=" + compressionType + ", securityProtocol=" + securityProtocol
-                + ", sslTruststoreLocation=" + sslTruststoreLocation + ", sslTruststorePassword="
-                + sslTruststorePassword + ", sslKeystoreType=" + sslKeystoreType + ", sslKeystoreLocation="
-                + sslKeystoreLocation + ", sslKeystorePassword=" + sslKeystorePassword + ", saslKerberosServiceName="
-                + saslKerberosServiceName + ", clientJaasConfPath=" + clientJaasConfPath
-                + ", saslJaasConf=" + (saslJaasConf.isPresent() ? "[redacted]" : Optional.empty())
-                + ", saslMechanism=" + saslMechanism + ", kerb5ConfPath=" + kerb5ConfPath
-                + ", maxBlockMs=" + maxBlockMs + ", retries=" + retries + ", requiredNumAcks="
-                + requiredNumAcks + ", deliveryTimeoutMs=" + deliveryTimeoutMs + ", ignoreExceptions="
-                + ignoreExceptions + ", syncSend=" + syncSend + ", level=" + level + ", async=" + async
-                + ", asyncQueueLength=" + asyncQueueLength + ", asyncOverflowAction=" + asyncOverflowAction
-                + ", filterLoggerNamePattern=" + filterLoggerNamePattern + "]";
-    }
-
+    Optional<String> filterLoggerNamePattern();
 }
