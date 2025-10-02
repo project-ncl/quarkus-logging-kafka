@@ -5,8 +5,7 @@ import java.util.logging.Formatter;
 import java.util.logging.Handler;
 import java.util.logging.Logger;
 
-import javax.inject.Inject;
-
+import jakarta.inject.Inject;
 import org.apache.kafka.log4jappender.KafkaLog4jAppender;
 import org.apache.log4j.Layout;
 import org.jboss.logmanager.ExtHandler;
@@ -38,7 +37,7 @@ public class KafkaLogHandlerRecorder {
      * @return initialized handler if configured
      */
     public RuntimeValue<Optional<Handler>> initializeHandler(final KafkaLogConfig config) {
-        if (!config.enabled) {
+        if (!config.enabled()) {
             return new RuntimeValue<>(Optional.empty());
         }
 
@@ -56,12 +55,12 @@ public class KafkaLogHandlerRecorder {
 
         Log4jAppenderHandler kafkaHandler = new Log4jAppenderHandler(appender, false);
 
-        kafkaHandler.setLevel(config.level);
+        kafkaHandler.setLevel(config.level());
 
         // set a formatter or a layout
         if (formatterOrLayout == null) {
             loggingLogger.warning("No formatter or layout for kafka logger provided.");
-            String timestampPattern = config.timestampPattern.orElse(null);
+            String timestampPattern = config.timestampPattern().orElse(null);
             formatterOrLayout = DefaultFormatterOrLayoutProducer.kafkaLayout(timestampPattern);
         }
 
@@ -77,19 +76,19 @@ public class KafkaLogHandlerRecorder {
                             + formatterOrLayout);
         }
 
-        config.filterLoggerNamePattern.ifPresent(s -> kafkaHandler.setFilter(new LoggerNamePatternFilter(s)));
+        config.filterLoggerNamePattern().ifPresent(s -> kafkaHandler.setFilter(new LoggerNamePatternFilter(s)));
 
         ExtHandler rootHandler;
 
-        if (config.async) {
+        if (config.async()) {
             AsyncHandler asyncWrapper;
-            if (config.asyncQueueLength.isPresent()) {
-                asyncWrapper = new AsyncHandler(config.asyncQueueLength.get());
+            if (config.asyncQueueLength().isPresent()) {
+                asyncWrapper = new AsyncHandler(config.asyncQueueLength().get());
             } else {
                 asyncWrapper = new AsyncHandler();
             }
-            config.asyncOverflowAction.ifPresent(action -> asyncWrapper.setOverflowAction(action));
-            asyncWrapper.setLevel(config.level);
+            config.asyncOverflowAction().ifPresent(asyncWrapper::setOverflowAction);
+            asyncWrapper.setLevel(config.level());
 
             asyncWrapper.addHandler(kafkaHandler);
 
@@ -105,28 +104,28 @@ public class KafkaLogHandlerRecorder {
         loggingLogger.config("Processing config to create KafkaLog4jAppender: " + config);
 
         KafkaLog4jAppender appender = new KafkaLog4jAppender();
-        appender.setBrokerList(config.brokerList);
-        appender.setTopic(config.topic);
+        appender.setBrokerList(config.brokerList());
+        appender.setTopic(config.topic());
 
-        config.compressionType.ifPresent(type -> appender.setCompressionType(type));
-        config.securityProtocol.ifPresent(protocol -> appender.setSecurityProtocol(protocol));
-        config.sslTruststoreLocation.ifPresent(location -> appender.setSslTruststoreLocation(location));
-        config.sslTruststorePassword.ifPresent(password -> appender.setSslTruststorePassword(password));
-        config.sslKeystoreType.ifPresent(type -> appender.setSslKeystoreType(type));
-        config.sslKeystoreLocation.ifPresent(location -> appender.setSslKeystoreLocation(location));
-        config.sslKeystorePassword.ifPresent(password -> appender.setSslKeystorePassword(password));
-        config.saslKerberosServiceName.ifPresent(name -> appender.setSaslKerberosServiceName(name));
-        config.clientJaasConfPath.ifPresent(path -> appender.setClientJaasConfPath(path));
-        config.saslJaasConf.ifPresent(clientJaasConf -> appender.setClientJaasConf(clientJaasConf));
-        config.saslMechanism.ifPresent(saslMechanism -> appender.setSaslMechanism(saslMechanism));
-        config.kerb5ConfPath.ifPresent(path -> appender.setKerb5ConfPath(path));
-        config.maxBlockMs.ifPresent(maxBlockMs -> appender.setMaxBlockMs(maxBlockMs));
+        config.compressionType().ifPresent(appender::setCompressionType);
+        config.securityProtocol().ifPresent(appender::setSecurityProtocol);
+        config.sslTruststoreLocation().ifPresent(appender::setSslTruststoreLocation);
+        config.sslTruststorePassword().ifPresent(appender::setSslTruststorePassword);
+        config.sslKeystoreType().ifPresent(appender::setSslKeystoreType);
+        config.sslKeystoreLocation().ifPresent(appender::setSslKeystoreLocation);
+        config.sslKeystorePassword().ifPresent(appender::setSslKeystorePassword);
+        config.saslKerberosServiceName().ifPresent(appender::setSaslKerberosServiceName);
+        config.clientJaasConfPath().ifPresent(appender::setClientJaasConfPath);
+        config.saslJaasConf().ifPresent(appender::setClientJaasConf);
+        config.saslMechanism().ifPresent(appender::setSaslMechanism);
+        config.kerb5ConfPath().ifPresent(appender::setKerb5ConfPath);
+        config.maxBlockMs().ifPresent(appender::setMaxBlockMs);
 
-        config.retries.ifPresent(retries -> appender.setRetries(retries));
-        config.requiredNumAcks.ifPresent(acks -> appender.setRequiredNumAcks(acks));
-        config.deliveryTimeoutMs.ifPresent(timeout -> appender.setDeliveryTimeoutMs(timeout));
-        config.ignoreExceptions.ifPresent(ignoreExceptions -> appender.setIgnoreExceptions(ignoreExceptions));
-        config.syncSend.ifPresent(syncSend -> appender.setSyncSend(syncSend));
+        config.retries().ifPresent(appender::setRetries);
+        config.requiredNumAcks().ifPresent(appender::setRequiredNumAcks);
+        config.deliveryTimeoutMs().ifPresent(appender::setDeliveryTimeoutMs);
+        config.ignoreExceptions().ifPresent(appender::setIgnoreExceptions);
+        config.syncSend().ifPresent(appender::setSyncSend);
 
         loggingLogger.finer("Running appender.activateOptions()");
         appender.activateOptions();
@@ -134,5 +133,4 @@ public class KafkaLogHandlerRecorder {
 
         return appender;
     }
-
 }
