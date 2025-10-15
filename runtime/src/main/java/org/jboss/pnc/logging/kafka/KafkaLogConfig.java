@@ -11,7 +11,7 @@ import org.apache.kafka.log4jappender.KafkaLog4jAppender;
 import org.jboss.logmanager.handlers.AsyncHandler;
 import org.jboss.logmanager.handlers.AsyncHandler.OverflowAction;
 
-@ConfigMapping(prefix = "log.handler.kafka")
+@ConfigMapping(prefix = "quarkus.log.handler.kafka")
 @ConfigRoot(phase = ConfigPhase.RUN_TIME)
 public interface KafkaLogConfig {
 
