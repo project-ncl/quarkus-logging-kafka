@@ -6,6 +6,7 @@ import io.quarkus.deployment.annotations.Record;
 import io.quarkus.deployment.builditem.FeatureBuildItem;
 import io.quarkus.deployment.builditem.LogHandlerBuildItem;
 
+import io.quarkus.runtime.RuntimeValue;
 import org.jboss.pnc.logging.kafka.KafkaLogConfig;
 import org.jboss.pnc.logging.kafka.KafkaLogHandlerRecorder;
 
@@ -20,8 +21,8 @@ class KafkaLogHandlerProcessor {
 
     @BuildStep
     @Record(ExecutionTime.RUNTIME_INIT)
-    LogHandlerBuildItem build(KafkaLogHandlerRecorder recorder, KafkaLogConfig config) {
-        return new LogHandlerBuildItem(recorder.initializeHandler(config));
+    LogHandlerBuildItem build(KafkaLogHandlerRecorder recorder) {
+        return new LogHandlerBuildItem(recorder.initializeHandler());
     }
 
 }

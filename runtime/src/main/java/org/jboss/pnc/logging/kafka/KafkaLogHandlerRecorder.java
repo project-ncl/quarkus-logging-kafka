@@ -30,13 +30,25 @@ public class KafkaLogHandlerRecorder {
     @Inject
     FormatterOrLayout formatterOrLayout;
 
+
+    private final RuntimeValue<KafkaLogConfig> configRuntime;
+
+    // Quarkus will inject runtime config here
+    public KafkaLogHandlerRecorder(RuntimeValue<KafkaLogConfig> configRuntime) {
+        this.configRuntime = configRuntime;
+    }
+
     /**
      * Kafka logging handler initialization based on the config.
      *
-     * @param config the kafka log config
+     * @param configRuntime the kafka log config
      * @return initialized handler if configured
      */
-    public RuntimeValue<Optional<Handler>> initializeHandler(final KafkaLogConfig config) {
+    public RuntimeValue<Optional<Handler>> initializeHandler() {
+
+        // can only call 'getValue' at runtime, inside here
+        KafkaLogConfig config = configRuntime.getValue();
+
         if (!config.enabled()) {
             return new RuntimeValue<>(Optional.empty());
         }
