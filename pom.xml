@@ -2,6 +2,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
+  <parent>
+    <groupId>org.jboss</groupId>
+    <artifactId>jboss-parent</artifactId>
+    <version>54</version>
+    <relativePath/>
+  </parent>
+
   <groupId>org.jboss.pnc.logging</groupId>
   <artifactId>quarkus-logging-kafka-parent</artifactId>
   <version>3.0.6-SNAPSHOT</version>
@@ -45,13 +52,11 @@
   </developers>
 
   <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <maven.compiler.parameters>true</maven.compiler.parameters>
+    <maven.compiler.release>17</maven.compiler.release>
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
-
-    <compiler-plugin.version>3.16.0</compiler-plugin.version>
+    <jdk.min.version>17</jdk.min.version>
 
     <commons-lang3.version>3.21.0</commons-lang3.version>
     <json-smart.version>2.6.0</json-smart.version>
@@ -59,8 +64,6 @@
     <log4j-jboss-logmanager.version>1.3.1.Final</log4j-jboss-logmanager.version>
     <reload4j.version>1.2.26</reload4j.version>
     <quarkus.version>3.40.0</quarkus.version>
-    <version.javadoc.plugin>3.12.0</version.javadoc.plugin>
-    <version.source.plugin>3.4.0</version.source.plugin>
     <tagSuffix />
   </properties>
 
@@ -128,10 +131,6 @@
           <artifactId>quarkus-maven-plugin</artifactId>
           <version>${quarkus.version}</version>
         </plugin>
-        <plugin>
-          <artifactId>maven-compiler-plugin</artifactId>
-          <version>${compiler-plugin.version}</version>
-        </plugin>
       </plugins>
     </pluginManagement>
     <plugins>
@@ -142,65 +141,11 @@
               <tagNameFormat>@{project.version}${tagSuffix}</tagNameFormat>
               <autoVersionSubmodules>true</autoVersionSubmodules>
               <useReleaseProfile>false</useReleaseProfile>
-              <releaseProfiles>release</releaseProfiles>
+              <releaseProfiles>central-release</releaseProfiles>
               <stagingRepository>https://central.sonatype.com/repository/maven-snapshots</stagingRepository>
               <goals>deploy</goals>
           </configuration>
       </plugin>
     </plugins>
   </build>
-  <profiles>
-    <profile>
-        <id>release</id>
-        <build>
-            <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-source-plugin</artifactId>
-                    <version>${version.source.plugin}</version>
-                    <executions>
-                        <execution>
-                            <id>attach-sources</id>
-                            <goals>
-                                <goal>jar-no-fork</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>${version.javadoc.plugin}</version>
-                    <executions>
-                        <execution>
-                            <id>attach-javadocs</id>
-                            <goals>
-                                <goal>jar</goal>
-                            </goals>
-                            <configuration>
-                                <detectOfflineLinks>false</detectOfflineLinks>
-                                <quiet>true</quiet>
-                                <doclint>none</doclint>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-gpg-plugin</artifactId>
-                    <version>3.2.8</version>
-                    <executions>
-                        <execution>
-                            <id>sign-artifacts</id>
-                            <phase>verify</phase>
-                            <goals>
-                                <goal>sign</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-            </plugins>
-        </build>
-    </profile>
-  </profiles>
 </project>
