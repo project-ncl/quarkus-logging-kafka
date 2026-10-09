@@ -1,12 +1,12 @@
 package org.jboss.pnc.logging.kafka;
 
+import java.util.HashMap;
+import java.util.logging.Formatter;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Layout;
 import org.jboss.logmanager.formatters.JsonFormatter;
 import org.jboss.logmanager.formatters.StructuredFormatter.Key;
-
-import java.util.HashMap;
-import java.util.logging.Formatter;
 
 /**
  * Creates an instance of {@link FormatterOrLayout} containing either a default {@link Formatter} or a default
@@ -15,7 +15,6 @@ import java.util.logging.Formatter;
  * @author <a href="mailto:pkocandr@redhat.com">Petr Kocandrle</a>
  */
 public class DefaultFormatterOrLayoutProducer {
-
 
     public static FormatterOrLayout kafkaLayout(String timestampPattern) {
         PncLoggingLayout layout = new PncLoggingLayout(timestampPattern);

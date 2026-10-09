@@ -87,8 +87,11 @@ public class Log4jAppenderHandler extends ExtHandler {
         if (appender instanceof OptionHandler) {
             ((OptionHandler) appender).activateOptions();
             if (loggingLogger.isLoggable(Level.FINE)) {
-                loggingLogger.fine(String.format("Invoking OptionHandler.activateOptions() on appender %s (%s)",
-                        appender.getName(), appender.getClass().getCanonicalName()));
+                loggingLogger.fine(
+                        String.format(
+                                "Invoking OptionHandler.activateOptions() on appender %s (%s)",
+                                appender.getName(),
+                                appender.getClass().getCanonicalName()));
             }
         }
     }
