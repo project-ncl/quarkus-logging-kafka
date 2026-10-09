@@ -14,35 +14,23 @@
   <version>3.0.6-SNAPSHOT</version>
   <packaging>pom</packaging>
 
-  <modules>
-    <module>deployment</module>
-    <module>runtime</module>
-  </modules>
-
   <name>Quarkus - Logging - Kafka - Parent</name>
   <description>Quarkus logging facility to send logs to Kafka</description>
   <url>http://www.redhat.com/</url>
   <inceptionYear>2020</inceptionYear>
 
   <organization>
-      <name>Red Hat, Inc.</name>
-      <url>http://www.redhat.com/</url>
+    <name>Red Hat, Inc.</name>
+    <url>http://www.redhat.com/</url>
   </organization>
 
   <licenses>
     <license>
       <name>Apache License, Version 2.0</name>
-      <distribution>repo</distribution>
       <url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
+      <distribution>repo</distribution>
     </license>
   </licenses>
-
-  <scm>
-    <connection>scm:git:http://github.com/project-ncl/quarkus-logging-kafka.git</connection>
-    <developerConnection>scm:git:git@github.com:project-ncl/quarkus-logging-kafka.git</developerConnection>
-    <url>http://github.com/project-ncl/quarkus-logging-kafka</url>
-    <tag>HEAD</tag>
-  </scm>
 
   <developers>
     <developer>
@@ -50,6 +38,25 @@
       <organizationUrl>http://www.redhat.com</organizationUrl>
     </developer>
   </developers>
+
+  <modules>
+    <module>deployment</module>
+    <module>runtime</module>
+  </modules>
+
+  <scm>
+    <connection>scm:git:http://github.com/project-ncl/quarkus-logging-kafka.git</connection>
+    <developerConnection>scm:git:git@github.com:project-ncl/quarkus-logging-kafka.git</developerConnection>
+    <tag>HEAD</tag>
+    <url>http://github.com/project-ncl/quarkus-logging-kafka</url>
+  </scm>
+
+  <distributionManagement>
+    <snapshotRepository>
+      <id>central-publisher</id>
+      <url>https://central.sonatype.com/repository/maven-snapshots</url>
+    </snapshotRepository>
+  </distributionManagement>
 
   <properties>
     <maven.compiler.parameters>true</maven.compiler.parameters>
@@ -64,7 +71,7 @@
     <log4j-jboss-logmanager.version>1.3.1.Final</log4j-jboss-logmanager.version>
     <reload4j.version>1.2.26</reload4j.version>
     <quarkus.version>3.40.0</quarkus.version>
-    <tagSuffix />
+    <tagSuffix/>
   </properties>
 
   <dependencyManagement>
@@ -116,13 +123,6 @@
     </dependencies>
   </dependencyManagement>
 
-  <distributionManagement>
-      <snapshotRepository>
-          <id>central-publisher</id>
-          <url>https://central.sonatype.com/repository/maven-snapshots</url>
-      </snapshotRepository>
-  </distributionManagement>
-
   <build>
     <pluginManagement>
       <plugins>
@@ -135,16 +135,53 @@
     </pluginManagement>
     <plugins>
       <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-release-plugin</artifactId>
-          <configuration>
-              <tagNameFormat>@{project.version}${tagSuffix}</tagNameFormat>
-              <autoVersionSubmodules>true</autoVersionSubmodules>
-              <useReleaseProfile>false</useReleaseProfile>
-              <releaseProfiles>central-release</releaseProfiles>
-              <stagingRepository>https://central.sonatype.com/repository/maven-snapshots</stagingRepository>
-              <goals>deploy</goals>
-          </configuration>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-release-plugin</artifactId>
+        <configuration>
+          <tagNameFormat>@{project.version}${tagSuffix}</tagNameFormat>
+          <autoVersionSubmodules>true</autoVersionSubmodules>
+          <useReleaseProfile>false</useReleaseProfile>
+          <releaseProfiles>central-release</releaseProfiles>
+          <stagingRepository>https://central.sonatype.com/repository/maven-snapshots</stagingRepository>
+          <goals>deploy</goals>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>com.diffplug.spotless</groupId>
+        <artifactId>spotless-maven-plugin</artifactId>
+        <version>3.10.3</version>
+        <configuration>
+          <pom>
+            <sortPom>
+              <expandEmptyElements>false</expandEmptyElements>
+            </sortPom>
+          </pom>
+          <java>
+            <removeUnusedImports/>
+            <importOrder>
+              <file>java-import-order.txt</file>
+            </importOrder>
+            <eclipse>
+              <file>java-formatter.xml</file>
+            </eclipse>
+            <lineEndings>UNIX</lineEndings>
+          </java>
+        </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>org.jboss.pnc</groupId>
+            <artifactId>ide-config</artifactId>
+            <version>1.1.0</version>
+          </dependency>
+        </dependencies>
+        <executions>
+          <execution>
+            <goals>
+              <goal>apply</goal>
+            </goals>
+            <phase>compile</phase>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>

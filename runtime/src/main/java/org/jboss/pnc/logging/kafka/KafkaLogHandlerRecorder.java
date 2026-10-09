@@ -6,6 +6,7 @@ import java.util.logging.Handler;
 import java.util.logging.Logger;
 
 import jakarta.inject.Inject;
+
 import org.apache.kafka.log4jappender.KafkaLog4jAppender;
 import org.apache.log4j.Layout;
 import org.jboss.logmanager.ExtHandler;
@@ -17,7 +18,8 @@ import io.quarkus.runtime.annotations.Recorder;
 /**
  * The recorder providing configured {@link KafkaLog4jAppender} wrapped in a {@link Log4jAppenderHandler}. Optionally
  * the result can be wrapped in an {@link AsyncHandler} instance. The format of the produced log can be defined by
- * a {@link Formatter} or a {@link Layout}. That can be injected by implementation of {@link DefaultFormatterOrLayoutProducer}.
+ * a {@link Formatter} or a {@link Layout}. That can be injected by implementation of
+ * {@link DefaultFormatterOrLayoutProducer}.
  * If no implementation of that interface is available, it uses {@link net.logstash.log4j.JSONEventLayoutV1}.
  *
  * @author <a href="mailto:pkocandr@redhat.com">Petr Kocandrle</a>
@@ -29,7 +31,6 @@ public class KafkaLogHandlerRecorder {
 
     @Inject
     FormatterOrLayout formatterOrLayout;
-
 
     private final RuntimeValue<KafkaLogConfig> configRuntime;
 
