@@ -3,13 +3,14 @@ package org.jboss.pnc.logging.kafka;
 import java.util.Optional;
 import java.util.logging.Level;
 
+import org.apache.kafka.log4jappender.KafkaLog4jAppender;
+import org.jboss.logmanager.handlers.AsyncHandler;
+import org.jboss.logmanager.handlers.AsyncHandler.OverflowAction;
+
 import io.quarkus.runtime.annotations.ConfigPhase;
 import io.quarkus.runtime.annotations.ConfigRoot;
 import io.smallrye.config.ConfigMapping;
 import io.smallrye.config.WithDefault;
-import org.apache.kafka.log4jappender.KafkaLog4jAppender;
-import org.jboss.logmanager.handlers.AsyncHandler;
-import org.jboss.logmanager.handlers.AsyncHandler.OverflowAction;
 
 @ConfigMapping(prefix = "quarkus.log.handler.kafka")
 @ConfigRoot(phase = ConfigPhase.RUN_TIME)
