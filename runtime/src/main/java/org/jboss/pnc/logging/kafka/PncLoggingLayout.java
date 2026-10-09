@@ -1,16 +1,17 @@
 package org.jboss.pnc.logging.kafka;
 
-import net.minidev.json.JSONObject;
+import java.net.UnknownHostException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TimeZone;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.FastDateFormat;
 import org.apache.log4j.Layout;
 import org.apache.log4j.spi.LoggingEvent;
 import org.apache.log4j.spi.ThrowableInformation;
 
-import java.net.UnknownHostException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TimeZone;
+import net.minidev.json.JSONObject;
 
 /**
  * A logging layout fit for PNC Quarkus components. Based on {@code net.logstash.log4j.JSONEventLayoutV1}.

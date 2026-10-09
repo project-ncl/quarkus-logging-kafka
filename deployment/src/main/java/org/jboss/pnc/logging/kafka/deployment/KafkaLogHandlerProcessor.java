@@ -1,14 +1,12 @@
 package org.jboss.pnc.logging.kafka.deployment;
 
+import org.jboss.pnc.logging.kafka.KafkaLogHandlerRecorder;
+
 import io.quarkus.deployment.annotations.BuildStep;
 import io.quarkus.deployment.annotations.ExecutionTime;
 import io.quarkus.deployment.annotations.Record;
 import io.quarkus.deployment.builditem.FeatureBuildItem;
 import io.quarkus.deployment.builditem.LogHandlerBuildItem;
-
-import io.quarkus.runtime.RuntimeValue;
-import org.jboss.pnc.logging.kafka.KafkaLogConfig;
-import org.jboss.pnc.logging.kafka.KafkaLogHandlerRecorder;
 
 class KafkaLogHandlerProcessor {
 
